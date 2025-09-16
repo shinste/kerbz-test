@@ -1,15 +1,16 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { useDispatch } from 'react-redux';
-import login from '../api/login';
 import { StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import login from '../api/login';
 
 const Login = () => {
   const [username, setUsername] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
-
+  const navigation = useNavigation();
   return (
     <View style={styles.loginContainer}>
       <View style={styles.headerContainer}>
@@ -46,6 +47,7 @@ const Login = () => {
             setLoading(true);
             try {
               await login(username, password, dispatch);
+              navigation.replace('Home');
             } catch (error) {
               alert(error.message);
             } finally {
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    color: '#BDBDBD',
+    color: '#858C8C',
     fontWeight: 'semibold',
   },
 
@@ -105,8 +107,8 @@ const styles = StyleSheet.create({
     width: '100%',
     marginLeft: 5,
     marginBottom: 2,
-    color: '#FAF9F6',
-    fontWeight: '400',
+    color: '#858C8C',
+    fontWeight: 'bold',
   },
 
   input: {
@@ -123,6 +125,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingTop: 12,
     paddingBottom: 12,
+    marginTop: 10,
     alignItems: 'center',
     borderRadius: 8,
     backgroundColor: '#FFA800',
