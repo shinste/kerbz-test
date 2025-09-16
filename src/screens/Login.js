@@ -15,7 +15,7 @@ const Login = () => {
     <View style={styles.loginContainer}>
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Welcome</Text>
-        <Text style={styles.text}> Sign in to continue </Text>
+        <Text style={styles.subText}> Sign in to continue </Text>
       </View>
       <View style={styles.formContainer}>
         <Text style={styles.formLabel}>Email</Text>
@@ -98,8 +98,8 @@ const styles = StyleSheet.create({
     color: '#FFFFFD',
   },
 
-  text: {
-    color: '#858C8C',
+  subText: {
+    color: '#A8BAC1',
     fontWeight: 'semibold',
   },
 
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     width: '100%',
     marginLeft: 5,
     marginBottom: 2,
-    color: '#858C8C',
+    color: '#A8BAC1',
     fontWeight: 'bold',
   },
 
