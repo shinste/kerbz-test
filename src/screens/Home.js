@@ -4,6 +4,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import HomeBar from '../components/HomeBar';
 import InfoBox from '../components/InfoBox';
+import { clearUserSession } from '../utils/clearUserSession';
 import me from '../api/me';
 
 const Home = () => {
@@ -11,11 +12,11 @@ const Home = () => {
 
   const navigate = useNavigation();
 
-//  React.useEffect(() => {
-//    const fetchInformation = async () => {
-//      await me();
-//    };
-//  }, []);
+  //  React.useEffect(() => {
+  //    const fetchInformation = async () => {
+  //      await me();
+  //    };
+  //  }, []);
 
   return (
     <>
@@ -23,7 +24,13 @@ const Home = () => {
       <SafeAreaView style={styles.homeContainer}>
         <InfoBox userID="user_12345" name="Stephen S." unreadCount={4} />
         {loading && <Text>Loading</Text>}
-        <TouchableOpacity style={styles.signOutButton} onPress={() => navigate.replace('Login')}>
+        <TouchableOpacity
+          style={styles.signOutButton}
+          onPress={async () => {
+            await clearUserSession();
+            navigate.replace('Login');
+          }}
+        >
           <Text style={styles.signOutText}>Sign Out</Text>
         </TouchableOpacity>
       </SafeAreaView>
@@ -54,4 +61,3 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-
