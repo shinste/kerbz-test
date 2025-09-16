@@ -4,7 +4,7 @@ import * as SecureStore from 'expo-secure-store';
 const initialState = {
   token: null,
   user: null,
-  lastActiveAt: null,
+  lastActiveAt: Date.now(),
 };
 
 const sessionSlice = createSlice({
