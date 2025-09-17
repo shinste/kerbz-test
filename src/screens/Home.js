@@ -6,40 +6,53 @@ import HomeBar from '../components/HomeBar';
 import InfoBox from '../components/InfoBox';
 import { clearUserSession } from '../utils/clearUserSession';
 import useInactivityCheck from '../hooks/useInactivityCheck';
-import me from '../api/me';
+import logout from '../api/logout';
 
 import { useDispatch, useSelector } from 'react-redux';
 
 const Home = () => {
   const [loading, setLoading] = React.useState(false);
   const lastActiveAt = useSelector((state) => state.session.lastActiveAt);
-
+  const { interact } = useInactivityCheck();
   const navigate = useNavigation();
 
-  //  React.useEffect(() => {
-  //    const fetchInformation = async () => {
-  //      await me();
-  //    };
-  //  }, []);
+  {
+    /* Delayed API to show loading state */
+  }
+  const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
-  const { interact } = useInactivityCheck();
+  const handleLogout = React.useCallback(async () => {
+    try {
+      setLoading(true);
+      await logout();
+      await sleep(1500);
+    } catch (err) {
+      console.log('Logout failed', err);
+    } finally {
+      setLoading(false);
+      navigate.replace('Login');
+    }
+  }, [navigate]);
 
   return (
     <>
       <HomeBar user="Stephen S." />
       <SafeAreaView style={styles.homeContainer}>
         <InfoBox userID="user_12345" name="Stephen S." unreadCount={4} />
-        {loading && <Text>Loading</Text>}
         <TouchableOpacity
-          style={styles.signOutButton}
-          onPress={async () => {
-            await clearUserSession();
-            navigate.replace('Login');
-          }}
+          style={[styles.signOutButton, { opacity: loading ? 0.2 : 1 }]}
+          onPress={handleLogout}
+          disabled={loading}
         >
-          <Text style={styles.signOutText}>Sign Out</Text>
+          <Text style={styles.signOutText}>
+            {loading ? 'Loading...' : 'Sign Out'}
+          </Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.interactButton} onPress={interact}>
+        <TouchableOpacity
+          style={styles.interactButton}
+          onPress={interact}
+          disabled={loading}
+        >
           <Text style={styles.signOutText}>Prolong Session</Text>
         </TouchableOpacity>
       </SafeAreaView>
