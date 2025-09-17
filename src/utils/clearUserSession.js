@@ -6,5 +6,4 @@ import { clearSession } from '../redux/sessionSlice';
 export const clearUserSession = async () => {
   store.dispatch(clearSession());
   await SecureStore.deleteItemAsync('token');
-  await SecureStore.deleteItemAsync('user');
 };

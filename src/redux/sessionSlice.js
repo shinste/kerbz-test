@@ -17,14 +17,12 @@ const sessionSlice = createSlice({
       state.user = user;
       state.lastActiveAt = Date.now();
       SecureStore.setItemAsync('token', token);
-      SecureStore.setItemAsync('user', JSON.stringify(user));
     },
     clearSession: (state) => {
       state.token = null;
       state.user = null;
       state.lastActiveAt = null;
       SecureStore.deleteItemAsync('token');
-      SecureStore.deleteItemAsync('user');
     },
     updateLastActive: (state) => {
       state.lastActiveAt = Date.now();

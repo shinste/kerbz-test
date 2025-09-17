@@ -9,11 +9,16 @@ const login = async (username, password, dispatch) => {
       email: username,
       password: password,
     });
-    const user = response.data.user.name;
-    const token = response.data.token;
     if (response.status === 201) {
-      dispatch(setSession({ token, user }));
-      await SecureStore.setItemAsync('user', user);
+      const { id, name, public_avatar } = response.data.user;
+      console.log(id, name, public_avatar, 'extraction');
+      const token = response.data.token;
+      dispatch(
+        setSession({
+          token,
+          user: { id, name, public_avatar },
+        }),
+      );
       await SecureStore.setItemAsync('token', token);
     }
   } catch (error) {

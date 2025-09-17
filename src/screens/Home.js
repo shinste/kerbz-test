@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 const Home = () => {
   const [loading, setLoading] = React.useState(false);
   const lastActiveAt = useSelector((state) => state.session.lastActiveAt);
+  const user = useSelector((state) => state.session.user);
   const { interact } = useInactivityCheck();
   const navigate = useNavigation();
 
@@ -36,9 +37,13 @@ const Home = () => {
 
   return (
     <>
-      <HomeBar user="Stephen S." />
+      <HomeBar user={loading ? 'loading' : user.name} />
       <SafeAreaView style={styles.homeContainer}>
-        <InfoBox userID="user_12345" name="Stephen S." unreadCount={4} />
+        <InfoBox
+          userID={loading ? 'loading' : user.id}
+          name={loading ? 'loading' : user.name}
+          unreadCount={4}
+        />
         <TouchableOpacity
           style={[styles.signOutButton, { opacity: loading ? 0.2 : 1 }]}
           onPress={handleLogout}
