@@ -1,8 +1,14 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import logout from '../api/logout';
+import clearUserSession from '../utils/clearUserSession';
 
 const Lock = () => {
   const navigation = useNavigation();
+
+  const handleSimulate = async () => {
+    await logout(false);
+  };
 
   return (
     <View style={styles.lockContainer}>
@@ -14,7 +20,7 @@ const Lock = () => {
         </Text>
         <TouchableOpacity
           style={styles.continueButton}
-          onPress={() => navigation.replace('Login')}
+          onPress={handleSimulate}
         >
           <Text style={styles.buttonText}>Continue Session</Text>
         </TouchableOpacity>

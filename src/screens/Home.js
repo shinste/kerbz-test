@@ -37,7 +37,10 @@ const Home = () => {
 
   return (
     <>
-      <HomeBar user={loading ? 'loading' : user.name} />
+      <HomeBar
+        name={loading ? 'loading' : user.name}
+        picture={loading ? null : user.public_avatar}
+      />
       <SafeAreaView style={styles.homeContainer}>
         <InfoBox
           userID={loading ? 'loading' : user.id}

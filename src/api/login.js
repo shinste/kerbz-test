@@ -11,7 +11,6 @@ const login = async (username, password, dispatch) => {
     });
     if (response.status === 201) {
       const { id, name, public_avatar } = response.data.user;
-      console.log(id, name, public_avatar, 'extraction');
       const token = response.data.token;
       dispatch(
         setSession({

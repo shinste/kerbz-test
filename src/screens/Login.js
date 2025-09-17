@@ -11,6 +11,18 @@ const Login = () => {
   const [loading, setLoading] = React.useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const handleLogin = async () => {
+    setLoading(true);
+    try {
+      await login(username, password, dispatch);
+      navigation.replace('Home');
+    } catch (error) {
+      alert(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <View style={styles.loginContainer}>
       <View style={styles.headerContainer}>
@@ -43,17 +55,7 @@ const Login = () => {
             },
           ]}
           disabled={loading || !username.trim() || !password.trim()}
-          onPress={async () => {
-            setLoading(true);
-            try {
-              await login(username, password, dispatch);
-              navigation.replace('Home');
-            } catch (error) {
-              alert(error.message);
-            } finally {
-              setLoading(false);
-            }
-          }}
+          onPress={handleLogin}
         >
           <Text style={styles.buttonText}>Sign In</Text>
         </TouchableOpacity>

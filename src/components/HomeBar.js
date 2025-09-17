@@ -1,15 +1,19 @@
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const HomeBar = ({ user }) => {
+const HomeBar = ({ name, picture }) => {
   return (
     <SafeAreaView style={styles.safeArea} edges={['top']}>
       <View style={styles.homeBar}>
         {/* Temporary picture div until I can get ME data */}
-        <View style={styles.temporary} />
+        {picture ? (
+          <Image source={{ uri: picture }} style={styles.temporary} />
+        ) : (
+          <View style={styles.temporary} />
+        )}
         <View>
           <Text style={styles.userText}>
-            {user.length > 15 ? `${user.slice(0, 12)}...` : user}
+            {name.length > 15 ? `${name.slice(0, 12)}...` : name}
           </Text>
           <Text style={styles.welcomeText}>Welcome Back</Text>
         </View>
